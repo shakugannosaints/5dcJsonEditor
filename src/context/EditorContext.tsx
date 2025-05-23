@@ -7,7 +7,7 @@ const initialState: EditorState = {
   name: '新棋局',
   author: '未知作者',
   timelines: {},
-  cosmeticTurnOffset: -1,
+  cosmeticTurnOffset: 0,
   history: [],
   currentHistoryIndex: -1,
 };
