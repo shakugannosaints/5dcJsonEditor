@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.App-header h1 {
+  margin: 0;
+}
+
+/* 棋盘样式 */
+.board {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.square {
+  transition: all 0.2s;
+}
+
+.square:hover {
+  box-shadow: inset 0 0 5px rgba(0, 0, 255, 0.5);
+}
+
+.square.highlight {
+  box-shadow: inset 0 0 10px rgba(0, 0, 255, 0.8);
+}
+
+/* 棋子样式 */
+.piece {
+  transition: transform 0.2s;
+}
+
+.piece:hover {
+  transform: scale(1.1);
+}
+
+.piece.black {
+  color: #000;
+}
+
+.piece.white {
+  color: #fff;
+  text-shadow: 0 0 1px #000;
+}
+
+.piece.dragging {
+  opacity: 0.5;
+}
+
+/* 时间线样式 */
+.timeline {
+  background-color: #f9f9f9;
+  transition: all 0.3s;
+}
+
+.timeline:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮样式 */
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+  }
+  
+  .board {
+    transform: scale(0.8);
+  }
+}
+
+/* 滚动条样式 */
+.boards-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.boards-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.boards-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.boards-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
