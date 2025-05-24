@@ -42,6 +42,12 @@ const Piece: React.FC<PieceProps> = ({ type, position, timelineId, boardPosition
 
   const isBlack = type.toLowerCase() === type;
   
+  // 为白色棋子添加轻微的阴影以增强可见性，保持白色外观
+  const whiteExtraStyle = !isBlack ? {
+    color: '#fff',
+    textShadow: '0.5px 0.5px 1px rgba(0,0,0,0.8), -0.5px -0.5px 1px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.6)',
+  } : {};
+  
   return (
     <div
       ref={drag}
@@ -56,6 +62,7 @@ const Piece: React.FC<PieceProps> = ({ type, position, timelineId, boardPosition
         alignItems: 'center',
         width: '100%',
         height: '100%',
+        ...whiteExtraStyle,
       }}
     >
       {pieceSymbols[type]}

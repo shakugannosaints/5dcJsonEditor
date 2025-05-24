@@ -61,8 +61,10 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
               justifyContent: 'center', 
               alignItems: 'center',
               fontSize: '1.5rem',
-              color: selectedPiece && selectedPiece.toLowerCase() === selectedPiece ? 'black' : 'white',
-              textShadow: selectedPiece && selectedPiece.toLowerCase() === selectedPiece ? 'none' : '0 0 1px #000',
+              color: selectedPiece && selectedPiece.toLowerCase() === selectedPiece ? 'black' : '#fff',
+              textShadow: selectedPiece && selectedPiece.toLowerCase() === selectedPiece ? 'none' : 
+                '0.5px 0.5px 1px rgba(0,0,0,0.8), -0.5px -0.5px 1px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.6)',
+              fontWeight: selectedPiece && selectedPiece.toLowerCase() !== selectedPiece ? 'bold' : 'normal',
               marginLeft: '5px'
             }}>
               {selectedPiece === null ? pieceSymbols['null'] : pieceSymbols[selectedPiece]}
@@ -97,8 +99,10 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
                 alignItems: 'center',
                 cursor: 'pointer',
                 fontSize: '1.8rem',
-                color: piece && piece.toLowerCase() === piece ? 'black' : 'white',
-                textShadow: piece && piece.toLowerCase() === piece ? 'none' : '0 0 1px #000',
+                color: piece && piece.toLowerCase() === piece ? 'black' : '#fff',
+                textShadow: piece && piece.toLowerCase() === piece ? 'none' : 
+                  '0.5px 0.5px 1px rgba(0,0,0,0.8), -0.5px -0.5px 1px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.6)',
+                fontWeight: piece && piece.toLowerCase() !== piece ? 'normal' : 'normal',
                 border: selectedPiece === piece ? '2px solid blue' : '1px solid #ccc',
                 borderRadius: '4px'
               }}
