@@ -1,0 +1,10 @@
+{
+  "Name": "t0newgame",
+  "Author": "冷筱华",
+  "Timelines": {
+    "0L": [
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+    ]
+  },
+  "CosmeticTurnOffset": -1
+}
