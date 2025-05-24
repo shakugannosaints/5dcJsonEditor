@@ -19,14 +19,41 @@ const TimelineList: React.FC = () => {
     // 处理普通的时间线ID
     const numA = parseInt(a.replace('L', ''));
     const numB = parseInt(b.replace('L', ''));
+    
+    // 如果一个是0，另一个不是0，0排在中间
+    if (numA === 0 && numB !== 0) return numB > 0 ? -1 : 1;
+    if (numB === 0 && numA !== 0) return numA > 0 ? 1 : -1;
+    
     return numA - numB;
   });
+
+  // 找到下一个可用的时间线ID
+  const getNextTimelineId = (isPositive: boolean) => {
+    const existingIds = Object.keys(timelines);
+    let nextNum = isPositive ? 1 : -1;
+    
+    while (existingIds.includes(`${nextNum}L`)) {
+      nextNum = isPositive ? nextNum + 1 : nextNum - 1;
+    }
+    
+    return `${nextNum}L`;
+  };
 
   const handleAddTimeline = (id: string) => {
     dispatch({
       type: 'ADD_TIMELINE',
       payload: { id }
     });
+  };
+
+  const handleAddPositiveTimeline = () => {
+    const id = getNextTimelineId(true);
+    handleAddTimeline(id);
+  };
+
+  const handleAddNegativeTimeline = () => {
+    const id = getNextTimelineId(false);
+    handleAddTimeline(id);
   };
 
   const handleCancelCopy = () => {
@@ -37,11 +64,11 @@ const TimelineList: React.FC = () => {
   return (
     <div className="timeline-list" style={{ padding: '20px' }}>
       <div className="timeline-controls" style={{ marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <button onClick={() => handleAddTimeline('-1L')}>添加负时间线</button>
+        <button onClick={handleAddNegativeTimeline}>添加负时间线</button>
         <button onClick={() => handleAddTimeline('0L')}>添加零时间线</button>
         <button onClick={() => handleAddTimeline('+0L')}>添加+0L时间线</button>
         <button onClick={() => handleAddTimeline('-0L')}>添加-0L时间线</button>
-        <button onClick={() => handleAddTimeline('1L')}>添加正时间线</button>
+        <button onClick={handleAddPositiveTimeline}>添加正时间线</button>
         
         {copyMode && (
           <div style={{ 
