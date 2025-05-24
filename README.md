@@ -1,3 +1,14 @@
+# 国际象棋多时间线可视化编辑器 / Chess Multi-Timeline Visual Editor
+
+<div align="center">
+  <button onclick="toggleLanguage()">🌐 English</button>
+  <button onclick="toggleLanguage()">🌐 中文</button>
+</div>
+
+---
+
+<div id="chinese-content">
+
 # 国际象棋多时间线可视化编辑器使用说明
 
 ## 项目概述
@@ -118,3 +129,170 @@
 - Manus
 - Github Copilot
 - Claude Opus 4
+
+</div>
+
+<div id="english-content" style="display: none;">
+
+# Chess Multi-Timeline Visual Editor User Guide
+
+## Project Overview
+
+This is a React-based chess multi-timeline visual editor that supports the following features:
+
+- Import/export specific format JSON files
+- Create and manage multiple timelines (positive, negative, zero timelines)
+- Add, delete, and copy boards on timelines
+- Freely place and move pieces
+- Undo/redo operations
+- Responsive design, adaptable to different devices
+
+## Deployment Instructions
+
+### Development Environment
+
+1. Extract the `chess_editor_source.zip` file
+2. Navigate to the project directory: `cd chess_editor_app`
+3. Install dependencies: `pnpm install`
+4. Start the development server: `pnpm run dev`
+5. Access in browser: `http://localhost:5173`
+
+### Production Deployment
+
+1. Extract the `chess_editor_source.zip` file
+2. Navigate to the project directory: `cd chess_editor_app`
+3. Install dependencies: `pnpm install`
+4. Build the project: `pnpm build`
+5. Deploy the files in the `dist` directory to your web server
+
+## Usage Instructions
+
+### Import/Export Functions
+
+- Click the "Import" button in the control panel to select and import JSON files
+- Click the "Export" button to export the current editor state as a JSON file
+
+### Timeline Management
+
+- Use the buttons above the timeline list to add different types of timelines
+- Timelines are arranged with negative numbers at the top and positive numbers at the bottom
+- Click the "Delete Timeline" button on a timeline to remove the entire timeline
+
+### Board Operations
+
+- Click the "Add Board" button in a timeline to add a new board at the end of the timeline
+- Click the "Delete" button below a board to remove the board
+- Boards can be copied across timelines
+- Empty boards can now be added (Updated 2025-5-24)
+
+### Piece Operations
+
+- Drag pieces to move them within boards or across boards
+- Pieces can be placed freely, not restricted by chess rules
+
+### Undo/Redo
+
+- Click the "Undo" and "Redo" buttons in the control panel
+- You can also use keyboard shortcuts: Ctrl+Z (Undo) and Ctrl+Y (Redo)
+
+### Metadata Editing
+
+- Click the "Edit Metadata" button to modify game name, author, and turn offset
+
+## JSON Format Description
+
+The JSON format supported by the editor is as follows:
+
+```json
+{
+  "Name": "Game Name",
+  "Author": "Author Name",
+  "Timelines": {
+    "-1L": [
+      "3k1/5/5/2K2/5"
+    ],
+    "0L": [
+      "3k1/5/5/2K2/5"
+    ],
+    "+0L": [
+      null, "8/8/8/8/8/8/8/8"
+    ]
+  },
+  "CosmeticTurnOffset": -1
+}
+```
+
+- `Name`: Game name
+- `Author`: Author name
+- `Timelines`: Object containing multiple timelines
+  - Keys are timeline IDs (such as "-1L", "0L", "+0L", etc.)
+  - Values are arrays of board states, each element is a FEN string or `null`
+- `CosmeticTurnOffset`: Turn offset
+
+## Project Structure
+
+- `src/components/`: UI components
+- `src/context/`: State management
+- `src/types/`: TypeScript type definitions
+- `public/`: Static assets
+
+## Technology Stack
+
+- React + TypeScript
+- React DnD (drag and drop functionality)
+- Tailwind CSS (styling)
+- Vite (build tool)
+
+## Notes
+
+- The editor supports different board sizes (5x5, 8x8, etc.)
+- Special "+0L" and "-0L" timelines require special handling
+- Imported JSON files must conform to the specified format
+
+## Acknowledgments
+
+- Manus
+- Github Copilot
+- Claude Opus 4
+
+</div>
+
+<script>
+function toggleLanguage() {
+  const chineseContent = document.getElementById('chinese-content');
+  const englishContent = document.getElementById('english-content');
+  
+  if (chineseContent.style.display === 'none') {
+    chineseContent.style.display = 'block';
+    englishContent.style.display = 'none';
+  } else {
+    chineseContent.style.display = 'none';
+    englishContent.style.display = 'block';
+  }
+}
+</script>
+
+<style>
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#chinese-content, #english-content {
+  transition: opacity 0.3s ease-in-out;
+}
+</style>
