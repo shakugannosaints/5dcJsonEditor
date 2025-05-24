@@ -1,7 +1,7 @@
 # 5dc多时间线可视化编辑器使用说明
 
 🌐 **选择语言**  
-[中文](README.md) | [English](README-en.md) |
+[中文](README.md) | [English](README-en.md)
 
 ## 项目概述
 

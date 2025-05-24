@@ -1,7 +1,7 @@
 # 5dc Multi-Timeline Visual Editor User Manual
 
 🌐 **Language**  
-[中文](README.md) | [English](README-en.md) |
+[中文](README.md) | [English](README-en.md)
 
 ## Project Overview
 
