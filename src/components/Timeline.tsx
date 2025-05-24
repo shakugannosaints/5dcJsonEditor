@@ -100,22 +100,29 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
                 </div>
               </>
             ) : (
-              <div 
-                className="empty-board" 
-                style={{ 
-                  width: '200px', 
-                  height: '200px', 
-                  border: copyMode ? '2px dashed blue' : '1px dashed #999', 
-                  display: 'flex', 
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  margin: '10px',
-                  cursor: copyMode ? 'pointer' : 'default',
-                  backgroundColor: copyMode ? 'rgba(0, 0, 255, 0.05)' : 'transparent'
-                }}
-              >
-                {copyMode ? '点击此处粘贴棋盘' : '空位置'}
-              </div>
+              <>
+                <div 
+                  className="empty-board" 
+                  style={{ 
+                    width: '200px', 
+                    height: '200px', 
+                    border: copyMode ? '2px dashed blue' : '1px dashed #999', 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    margin: '10px',
+                    cursor: copyMode ? 'pointer' : 'default',
+                    backgroundColor: copyMode ? 'rgba(0, 0, 255, 0.05)' : 'transparent'
+                  }}
+                >
+                  {copyMode ? '点击此处粘贴棋盘' : '空位置'}
+                </div>
+                <div className="board-controls" style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+                  <button onClick={() => handleRemoveBoard(index)} style={{ marginRight: '5px' }}>
+                    删除
+                  </button>
+                </div>
+              </>
             )}
           </div>
         ))}

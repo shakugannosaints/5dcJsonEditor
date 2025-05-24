@@ -8,6 +8,7 @@ const initialState: EditorState = {
   author: '未知作者',
   timelines: {},
   cosmeticTurnOffset: 0,
+  boardSize: 8,  // 默认8x8棋盘
   history: [],
   currentHistoryIndex: -1,
 };
@@ -95,6 +96,25 @@ const copyBoard = (board: Board): Board => {
     id: uuidv4(),
     squares: JSON.parse(JSON.stringify(board.squares)),
     fen: board.fen,
+  };
+};
+
+// 调整棋盘大小
+const resizeBoard = (board: Board, newSize: number): Board => {
+  const currentSize = board.squares.length;
+  const newSquares: PieceType[][] = Array(newSize).fill(null).map(() => Array(newSize).fill(null));
+  
+  // 复制现有棋子到新棋盘，保持在相应位置
+  for (let row = 0; row < Math.min(currentSize, newSize); row++) {
+    for (let col = 0; col < Math.min(currentSize, newSize); col++) {
+      newSquares[row][col] = board.squares[row][col];
+    }
+  }
+  
+  return {
+    ...board,
+    squares: newSquares,
+    fen: generateFen(newSquares),
   };
 };
 
@@ -206,7 +226,7 @@ const editorReducer = (state: EditorState, action: ActionType): EditorState => {
       }
       
       // 插入新棋盘
-      newBoards.splice(position, 0, board === null ? null : (board || createEmptyBoard()));
+      newBoards.splice(position, 0, board === null ? null : (board || createEmptyBoard(state.boardSize)));
       
       newState = {
         ...state,
@@ -450,6 +470,29 @@ const editorReducer = (state: EditorState, action: ActionType): EditorState => {
         name: name !== undefined ? name : state.name,
         author: author !== undefined ? author : state.author,
         cosmeticTurnOffset: cosmeticTurnOffset !== undefined ? cosmeticTurnOffset : state.cosmeticTurnOffset,
+      };
+      
+      return addToHistory(newState);
+      
+    case 'SET_BOARD_SIZE':
+      const { size } = action.payload;
+      
+      // 更新所有现有棋盘的大小
+      const updatedTimelines: Record<string, any> = {};
+      Object.entries(state.timelines).forEach(([timelineId, timeline]) => {
+        const updatedBoards = timeline.boards.map(board => 
+          board ? resizeBoard(board, size) : null
+        );
+        updatedTimelines[timelineId] = {
+          ...timeline,
+          boards: updatedBoards,
+        };
+      });
+      
+      newState = {
+        ...state,
+        boardSize: size,
+        timelines: updatedTimelines,
       };
       
       return addToHistory(newState);

@@ -80,6 +80,16 @@ const ControlPanel: React.FC = () => {
     });
   };
 
+  const handleBoardSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSize = parseInt(e.target.value);
+    if (!isNaN(newSize) && newSize >= 1 && newSize <= 999) {
+      dispatch({
+        type: 'SET_BOARD_SIZE',
+        payload: { size: newSize }
+      });
+    }
+  };
+
   return (
     <div className="control-panel" style={{ 
       padding: '15px', 
@@ -92,6 +102,36 @@ const ControlPanel: React.FC = () => {
       <div className="metadata" style={{ flex: 1 }}>
         <h2 style={{ margin: '0 0 5px 0' }}>{state.name}</h2>
         <p style={{ margin: 0 }}>作者: {state.author}</p>
+      </div>
+      
+      <div className="board-size-control" style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '10px',
+        marginRight: '20px' 
+      }}>
+        <label htmlFor="board-size-input" style={{ fontWeight: 'bold' }}>
+          棋盘大小:
+        </label>
+        <input
+          id="board-size-input"
+          type="number"
+          min="1"
+          max="999"
+          value={state.boardSize}
+          onChange={handleBoardSizeChange}
+          style={{
+            padding: '5px 10px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            backgroundColor: 'white',
+            width: '80px',
+            textAlign: 'center'
+          }}
+        />
+        <span style={{ fontSize: '0.9em', color: '#666' }}>
+          (1-999)
+        </span>
       </div>
       
       <div className="controls" style={{ display: 'flex', gap: '10px' }}>

@@ -20,6 +20,7 @@ export interface EditorState {
   author: string;
   timelines: Record<string, Timeline>;  // 键为时间线ID，值为时间线对象
   cosmeticTurnOffset: number;
+  boardSize: number;  // 棋盘大小（边长）
   history: EditorState[];  // 历史状态，用于撤销/重做
   currentHistoryIndex: number;  // 当前历史状态索引
 }
@@ -35,6 +36,7 @@ export type ActionType =
   | { type: 'UPDATE_BOARD', payload: { timelineId: string, position: number, squares: PieceType[][] } }
   | { type: 'MOVE_PIECE', payload: { timelineId: string, boardPosition: number, fromSquare: [number, number], toSquare: [number, number] } }
   | { type: 'SET_PIECE', payload: { timelineId: string, boardPosition: number, square: [number, number], piece: PieceType } }
+  | { type: 'SET_BOARD_SIZE', payload: { size: number } }
   | { type: 'UNDO' }
   | { type: 'REDO' }
   | { type: 'UPDATE_METADATA', payload: { name?: string, author?: string, cosmeticTurnOffset?: number } };
