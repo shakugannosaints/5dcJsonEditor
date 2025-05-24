@@ -68,7 +68,7 @@ const ControlPanel: React.FC = () => {
   const handleUpdateMetadata = () => {
     const name = prompt('输入棋局名称:', state.name);
     const author = prompt('输入作者名称:', state.author);
-    const cosmeticTurnOffset = prompt('输入穿越动画开关:', state.cosmeticTurnOffset.toString());
+    const cosmeticTurnOffset = prompt('输入回合偏移量:', state.cosmeticTurnOffset.toString());
     
     dispatch({
       type: 'UPDATE_METADATA',

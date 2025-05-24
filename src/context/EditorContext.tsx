@@ -206,7 +206,7 @@ const editorReducer = (state: EditorState, action: ActionType): EditorState => {
       }
       
       // 插入新棋盘
-      newBoards.splice(position, 0, board || createEmptyBoard());
+      newBoards.splice(position, 0, board === null ? null : (board || createEmptyBoard()));
       
       newState = {
         ...state,

@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { PieceType } from '../types';
-import { useEditor } from '../context/EditorContext';
 import { PieceSelectorContext } from './Square';
 
 interface PieceSelectorProps {
@@ -8,8 +7,8 @@ interface PieceSelectorProps {
   boardPosition: number;
 }
 
-const PieceSelector: React.FC<PieceSelectorProps> = ({ timelineId, boardPosition }) => {
-  const { dispatch } = useEditor();
+const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
+  // 使用上下文中的状态，不需要dispatch
   const [isOpen, setIsOpen] = useState(false);
   const { selectedPiece, setSelectedPiece } = useContext(PieceSelectorContext);
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from 'react';
+import React, { useContext, createContext } from 'react';
 import { Timeline as TimelineType } from '../types';
 import Board from './Board';
 import { useEditor } from '../context/EditorContext';
@@ -25,12 +25,13 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
   const { id, boards } = timeline;
   const { copyMode, sourceBoardInfo, setSourceBoardInfo, setCopyMode } = useContext(CopyModeContext);
 
-  const handleAddBoard = () => {
+  const handleAddBoard = (isEmpty: boolean = false) => {
     dispatch({
       type: 'ADD_BOARD',
       payload: {
         timelineId: id,
-        position: boards.length
+        position: boards.length,
+        board: isEmpty ? null : undefined
       }
     });
   };
@@ -138,9 +139,22 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
               点击此处粘贴棋盘
             </div>
           ) : (
-            <button onClick={handleAddBoard} style={{ padding: '10px', cursor: 'pointer' }}>
-              添加棋盘
-            </button>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => handleAddBoard(false)} style={{ padding: '10px', cursor: 'pointer' }}>
+                添加棋盘
+              </button>
+              <button 
+                onClick={() => handleAddBoard(true)} 
+                style={{ 
+                  padding: '10px', 
+                  cursor: 'pointer',
+                  backgroundColor: '#f0f0f0',
+                  border: '1px dashed #999'
+                }}
+              >
+                添加空棋盘
+              </button>
+            </div>
           )}
         </div>
       </div>

@@ -29,7 +29,7 @@ export type ActionType =
   | { type: 'IMPORT_JSON', payload: any }
   | { type: 'ADD_TIMELINE', payload: { id: string } }
   | { type: 'REMOVE_TIMELINE', payload: { id: string } }
-  | { type: 'ADD_BOARD', payload: { timelineId: string, position: number, board?: Board } }
+  | { type: 'ADD_BOARD', payload: { timelineId: string, position: number, board?: Board | null } }
   | { type: 'REMOVE_BOARD', payload: { timelineId: string, position: number } }
   | { type: 'COPY_BOARD', payload: { sourceTimelineId: string, sourcePosition: number, targetTimelineId: string, targetPosition: number } }
   | { type: 'UPDATE_BOARD', payload: { timelineId: string, position: number, squares: PieceType[][] } }
