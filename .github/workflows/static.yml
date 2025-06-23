@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] # 只在 main 分支推送时触发
+    branches: [main]
 
 permissions:
   pages: write
@@ -16,29 +16,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      
+      # 使用专门的 pnpm 安装 action
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: '20' # 使用你项目所需的 Node 版本
+          version: 8
+          run_install: false
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
           cache: 'pnpm'
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: pnpm run build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      
+      - run: pnpm install
+      - run: pnpm run build
+      
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist # Vite 默认的输出目录
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          path: 'dist'
+      
+      - uses: actions/deploy-pages@v4
