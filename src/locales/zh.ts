@@ -53,6 +53,14 @@ export const zh = {
     emptyPosition: "空位置",
     copy: "复制"
   },
+
+  // 棋子选择器
+  pieceSelector: {
+    selectPiece: "选择棋子",
+    closePieceSelector: "关闭棋子选择",
+    currentSelection: "当前选择:",
+    clickToPlace: "(点击棋盘格子放置棋子)"
+  },
   
   // 语言切换
   language: {

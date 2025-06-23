@@ -55,6 +55,14 @@ export const en: LocaleType = {
     emptyPosition: "Empty Position",
     copy: "Copy"
   },
+
+  // Piece Selector
+  pieceSelector: {
+    selectPiece: "Select Piece",
+    closePieceSelector: "Close Piece Selector",
+    currentSelection: "Current Selection:",
+    clickToPlace: "(Click on board square to place piece)"
+  },
   
   // Language switching
   language: {

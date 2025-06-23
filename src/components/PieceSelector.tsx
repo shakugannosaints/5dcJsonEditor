@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { PieceType } from '../types';
 import { PieceSelectorContext } from './Square';
+import { useLocale } from '../context/LocaleContext';
 
 interface PieceSelectorProps {
   timelineId: string;
@@ -11,6 +12,7 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
   // 使用上下文中的状态，不需要dispatch
   const [isOpen, setIsOpen] = useState(false);
   const { selectedPiece, setSelectedPiece } = useContext(PieceSelectorContext);
+  const { t } = useLocale();
 
   const pieceTypes: PieceType[] = ['p', 'r', 'n', 'b', 'q', 'k', 'P', 'R', 'N', 'B', 'Q', 'K', null];
   const pieceSymbols: Record<string, string> = {
@@ -49,11 +51,11 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
             cursor: 'pointer'
           }}
         >
-          {isOpen ? '关闭棋子选择' : '选择棋子'}
+          {isOpen ? t.pieceSelector.closePieceSelector : t.pieceSelector.selectPiece}
         </button>
         {selectedPiece !== undefined && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span>当前选择: </span>
+            <span>{t.pieceSelector.currentSelection} </span>
             <div style={{ 
               width: '30px', 
               height: '30px', 
@@ -70,7 +72,7 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
               {selectedPiece === null ? pieceSymbols['null'] : pieceSymbols[selectedPiece]}
             </div>
             <span style={{ marginLeft: '5px' }}>
-              (点击棋盘格子放置棋子)
+              {t.pieceSelector.clickToPlace}
             </span>
           </div>
         )}
