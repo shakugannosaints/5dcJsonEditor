@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Board as BoardType } from '../types';
 import Square, { PieceSelectorContext } from './Square';
 import PieceSelector from './PieceSelector';
+import { useLocale } from '../context/LocaleContext';
 
 interface BoardProps {
   board: BoardType;
@@ -10,6 +11,7 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = ({ board, timelineId, boardPosition }) => {
+  const { t } = useLocale();
   const { squares } = board;
   const size = squares.length;
   const [showPieceSelector, setShowPieceSelector] = useState(false);
@@ -29,7 +31,7 @@ const Board: React.FC<BoardProps> = ({ board, timelineId, boardPosition }) => {
             cursor: 'pointer'
           }}
         >
-          {showPieceSelector ? '隐藏棋子编辑器' : '显示棋子编辑器'}
+          {showPieceSelector ? t.board.hidePieceEditor : t.board.showPieceEditor}
         </button>
       </div>
       

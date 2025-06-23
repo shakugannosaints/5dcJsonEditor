@@ -2,6 +2,7 @@ import React, { useContext, createContext } from 'react';
 import { Timeline as TimelineType } from '../types';
 import Board from './Board';
 import { useEditor } from '../context/EditorContext';
+import { useLocale } from '../context/LocaleContext';
 
 // 创建一个上下文来共享复制模式状态
 export const CopyModeContext = createContext<{
@@ -21,7 +22,8 @@ interface TimelineProps {
 }
 
 const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
-  const { dispatch } = useEditor();
+  const { dispatch, state } = useEditor();
+  const { t } = useLocale();
   const { id, boards } = timeline;
   const { copyMode, sourceBoardInfo, setSourceBoardInfo, setCopyMode } = useContext(CopyModeContext);
 
@@ -37,13 +39,21 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
   };
 
   const handleRemoveBoard = (position: number) => {
-    dispatch({
-      type: 'REMOVE_BOARD',
-      payload: {
-        timelineId: id,
-        position
-      }
-    });
+    if (confirm(t.board.confirmDeleteBoard)) {
+      dispatch({
+        type: 'REMOVE_BOARD',
+        payload: {
+          timelineId: id,
+          position
+        }
+      });
+    }
+  };
+
+  const handleDeleteTimeline = () => {
+    if (confirm(t.timeline.confirmDelete)) {
+      dispatch({ type: 'REMOVE_TIMELINE', payload: { id } });
+    }
   };
 
   const handleCopyBoard = (position: number) => {
@@ -74,9 +84,9 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
   return (
     <div className="timeline" style={{ margin: '15px 0', padding: '10px', border: '1px solid #666', borderRadius: '5px' }}>
       <div className="timeline-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-        <h3 style={{ margin: 0 }}>时间线: {id}</h3>
-        <button onClick={() => dispatch({ type: 'REMOVE_TIMELINE', payload: { id } })}>
-          删除时间线
+        <h3 style={{ margin: 0 }}>{t.timeline.title}: {id}</h3>
+        <button onClick={handleDeleteTimeline}>
+          {t.timeline.deleteTimeline}
         </button>
       </div>
       <div className="boards-container" style={{ display: 'flex', overflowX: 'auto', padding: '10px 0' }}>
@@ -92,10 +102,10 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
                 <Board board={board} timelineId={id} boardPosition={index} />
                 <div className="board-controls" style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
                   <button onClick={() => handleCopyBoard(index)} style={{ marginRight: '5px' }}>
-                    复制
+                    {t.board.copy}
                   </button>
                   <button onClick={() => handleRemoveBoard(index)} style={{ marginRight: '5px' }}>
-                    删除
+                    {t.board.deleteBoard}
                   </button>
                 </div>
               </>
@@ -104,9 +114,9 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
                 <div 
                   className="empty-board" 
                   style={{ 
-                    width: '200px', 
-                    height: '200px', 
-                    border: copyMode ? '2px dashed blue' : '1px dashed #999', 
+                    width: `${state.boardSize * 40+16}px`, // 40px per square, border width handled separately
+                    height: `${state.boardSize * 40+16}px`, // Same calculation as board size
+                    border: copyMode ? '2px dashed blue' : '2px dashed #999', // Always 2px to match normal board
                     display: 'flex', 
                     justifyContent: 'center', 
                     alignItems: 'center', 
@@ -115,11 +125,11 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
                     backgroundColor: copyMode ? 'rgba(0, 0, 255, 0.05)' : 'transparent'
                   }}
                 >
-                  {copyMode ? '点击此处粘贴棋盘' : '空位置'}
+                  {copyMode ? t.timeline.clickToCopy : t.board.emptyPosition}
                 </div>
                 <div className="board-controls" style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
                   <button onClick={() => handleRemoveBoard(index)} style={{ marginRight: '5px' }}>
-                    删除
+                    {t.common.delete}
                   </button>
                 </div>
               </>
@@ -143,12 +153,12 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
               backgroundColor: 'rgba(0, 0, 255, 0.05)',
               borderRadius: '4px'
             }}>
-              点击此处粘贴棋盘
+              {t.timeline.clickToCopy}
             </div>
           ) : (
             <div style={{ display: 'flex', gap: '10px' }}>
               <button onClick={() => handleAddBoard(false)} style={{ padding: '10px', cursor: 'pointer' }}>
-                添加棋盘
+                {t.board.addBoard}
               </button>
               <button 
                 onClick={() => handleAddBoard(true)} 
@@ -159,7 +169,7 @@ const Timeline: React.FC<TimelineProps> = ({ timeline }) => {
                   border: '1px dashed #999'
                 }}
               >
-                添加空棋盘
+                {t.board.addEmptyBoard}
               </button>
             </div>
           )}

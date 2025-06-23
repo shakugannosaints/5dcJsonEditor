@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useEditor } from '../context/EditorContext';
+import { useLocale } from '../context/LocaleContext';
 import Timeline, { CopyModeContext } from './Timeline';
 
 const TimelineList: React.FC = () => {
   const { state, dispatch } = useEditor();
+  const { t } = useLocale();
   const { timelines } = state;
   const [copyMode, setCopyMode] = useState(false);
   const [sourceBoardInfo, setSourceBoardInfo] = useState<{ timelineId: string; boardPosition: number } | null>(null);
@@ -64,11 +66,11 @@ const TimelineList: React.FC = () => {
   return (
     <div className="timeline-list" style={{ padding: '20px' }}>
       <div className="timeline-controls" style={{ marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <button onClick={handleAddNegativeTimeline}>添加负时间线</button>
-        <button onClick={() => handleAddTimeline('0L')}>添加零时间线</button>
-        <button onClick={() => handleAddTimeline('+0L')}>添加+0L时间线</button>
-        <button onClick={() => handleAddTimeline('-0L')}>添加-0L时间线</button>
-        <button onClick={handleAddPositiveTimeline}>添加正时间线</button>
+        <button onClick={handleAddNegativeTimeline}>{t.timeline.addNegativeTimeline}</button>
+        <button onClick={() => handleAddTimeline('0L')}>{t.timeline.addZeroTimeline}</button>
+        <button onClick={() => handleAddTimeline('+0L')}>{t.timeline.addPlusZeroTimeline}</button>
+        <button onClick={() => handleAddTimeline('-0L')}>{t.timeline.addMinusZeroTimeline}</button>
+        <button onClick={handleAddPositiveTimeline}>{t.timeline.addPositiveTimeline}</button>
         
         {copyMode && (
           <div style={{ 
@@ -80,7 +82,7 @@ const TimelineList: React.FC = () => {
             borderRadius: '4px',
             border: '1px solid blue'
           }}>
-            <span style={{ marginRight: '10px' }}>复制模式：请点击目标位置完成复制</span>
+            <span style={{ marginRight: '10px' }}>{t.timeline.copyMode}：{t.timeline.clickToCopy}</span>
             <button 
               onClick={handleCancelCopy}
               style={{ 
@@ -92,7 +94,7 @@ const TimelineList: React.FC = () => {
                 cursor: 'pointer'
               }}
             >
-              取消复制
+              {t.timeline.exitCopyMode}
             </button>
           </div>
         )}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEditor } from '../context/EditorContext';
+import { useLocale } from '../context/LocaleContext';
 
 const ControlPanel: React.FC = () => {
   const { state, dispatch } = useEditor();
+  const { t } = useLocale();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleUndo = () => {
@@ -27,7 +29,7 @@ const ControlPanel: React.FC = () => {
         const json = JSON.parse(event.target?.result as string);
         dispatch({ type: 'IMPORT_JSON', payload: json });
       } catch (error) {
-        alert('导入失败：无效的JSON格式');
+        alert(t.metadata.importFailed);
         console.error('导入失败：', error);
       }
     };
@@ -66,9 +68,9 @@ const ControlPanel: React.FC = () => {
   };
 
   const handleUpdateMetadata = () => {
-    const name = prompt('输入棋局名称:', state.name);
-    const author = prompt('输入作者名称:', state.author);
-    const cosmeticTurnOffset = prompt('输入回合偏移量:', state.cosmeticTurnOffset.toString());
+    const name = prompt(t.metadata.enterGameName, state.name);
+    const author = prompt(t.metadata.enterAuthorName, state.author);
+    const cosmeticTurnOffset = prompt(t.metadata.enterTurnOffset, state.cosmeticTurnOffset.toString());
     
     dispatch({
       type: 'UPDATE_METADATA',
@@ -101,7 +103,7 @@ const ControlPanel: React.FC = () => {
     }}>
       <div className="metadata" style={{ flex: 1 }}>
         <h2 style={{ margin: '0 0 5px 0' }}>{state.name}</h2>
-        <p style={{ margin: 0 }}>作者: {state.author}</p>
+        <p style={{ margin: 0 }}>{t.controlPanel.author}: {state.author}</p>
       </div>
       
       <div className="board-size-control" style={{ 
@@ -111,7 +113,7 @@ const ControlPanel: React.FC = () => {
         marginRight: '20px' 
       }}>
         <label htmlFor="board-size-input" style={{ fontWeight: 'bold' }}>
-          棋盘大小:
+          {t.controlPanel.boardSize}:
         </label>
         <input
           id="board-size-input"
@@ -130,16 +132,16 @@ const ControlPanel: React.FC = () => {
           }}
         />
         <span style={{ fontSize: '0.9em', color: '#666' }}>
-          (1-999)
+          {t.controlPanel.boardSizeRange}
         </span>
       </div>
       
       <div className="controls" style={{ display: 'flex', gap: '10px' }}>
-        <button onClick={handleUpdateMetadata}>编辑元数据</button>
-        <button onClick={handleUndo} disabled={state.currentHistoryIndex <= 0}>撤销</button>
-        <button onClick={handleRedo} disabled={state.currentHistoryIndex >= state.history.length - 1}>重做</button>
-        <button onClick={handleImport}>导入</button>
-        <button onClick={handleExport}>导出</button>
+        <button onClick={handleUpdateMetadata}>{t.controlPanel.editMetadata}</button>
+        <button onClick={handleUndo} disabled={state.currentHistoryIndex <= 0}>{t.controlPanel.undo}</button>
+        <button onClick={handleRedo} disabled={state.currentHistoryIndex >= state.history.length - 1}>{t.controlPanel.redo}</button>
+        <button onClick={handleImport}>{t.controlPanel.import}</button>
+        <button onClick={handleExport}>{t.controlPanel.export}</button>
         <input
           type="file"
           ref={fileInputRef}
