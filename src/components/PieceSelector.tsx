@@ -36,11 +36,20 @@ const PieceSelector: React.FC<PieceSelectorProps> = (_props) => {
     setIsOpen(false);
   };
 
+  const handleToggleOpen = () => {
+    const newIsOpen = !isOpen;
+    setIsOpen(newIsOpen);
+    // 关闭时重置选中的棋子
+    if (!newIsOpen) {
+      setSelectedPiece(undefined);
+    }
+  };
+
   return (
     <div className="piece-selector" style={{ marginBottom: '10px' }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
         <button 
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleToggleOpen}
           style={{ 
             marginRight: '10px',
             padding: '5px 10px',

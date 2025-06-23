@@ -17,11 +17,20 @@ const Board: React.FC<BoardProps> = ({ board, timelineId, boardPosition }) => {
   const [showPieceSelector, setShowPieceSelector] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState<any>(undefined);
 
+  const handleTogglePieceSelector = () => {
+    const newShowState = !showPieceSelector;
+    setShowPieceSelector(newShowState);
+    // 关闭棋子选择器时重置选中的棋子
+    if (!newShowState) {
+      setSelectedPiece(undefined);
+    }
+  };
+
   return (
     <div className="board-container" style={{ margin: '10px', padding: '5px', border: '1px solid #ccc' }}>
       <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
         <button 
-          onClick={() => setShowPieceSelector(!showPieceSelector)}
+          onClick={handleTogglePieceSelector}
           style={{
             padding: '5px 10px',
             backgroundColor: showPieceSelector ? '#f44336' : '#4CAF50',
